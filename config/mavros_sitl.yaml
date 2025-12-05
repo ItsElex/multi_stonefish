@@ -1,0 +1,18 @@
+mavros:
+  ros__parameters:
+    fcu_url: "udp://:14550@127.0.0.1:14551"
+    gcs_url: ""
+    target_system_id: 1
+    target_component_id: 1
+    
+    time:
+      time_ref_source: "fcu"
+      timesync_mode: "NONE"
+    
+    conn:
+      heartbeat_rate: 1.0
+      timeout: 10.0
+      
+    sys:
+      min_voltage: 10.0
+      disable_diag: false

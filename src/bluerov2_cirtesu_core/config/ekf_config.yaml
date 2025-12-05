@@ -1,0 +1,53 @@
+ekf_filter_node:
+  ros__parameters:
+
+    debug: true  # Activa el modo de depuración
+    debug_out_file: /home/bluerov/debug_file.txt
+    frequency: 10.0
+    sensor_timeout: 0.2
+    two_d_mode: false  # Si estás trabajando en un plano 2D, habilita esto
+
+    odom0: /zed/microstrain_inertial_driver/odom  # Tópico de odometría
+    odom0_config: [true, true, true,
+                   false, false, false,
+                   false,  false, false,
+                   false, false, false,
+                   false, false, false]  # Configura qué datos de la odometría usar
+                       
+    
+    odom1: /odometry_depth  # Tópico de odometría
+    odom1_config: [false, false, true,
+                   false, false, false,
+                   false,  false, false,
+                   false, false, false,
+                   false, false, false]  # Configura qué datos de la odometría usar                                  
+
+    imu0: /zed/microstrain_inertial_driver/imu/data  # Tópico de IMU
+    imu0_config: [false, false, false,
+                   true, true, true,
+                   false,  false, false,
+                   true, true, true,
+                   false, false, false]  # Configura qué datos de la IMU usar
+                   
+    
+
+    imu0_differential: false  # No aplicar derivada en datos de IMU
+    imu0_remove_gravitational_acceleration: true  # Remueve aceleración gravitacional
+    
+    imu1: /imu/data2  # Tópico de IMU
+    imu1_config: [false, false, false,
+                   true, true, true,
+                   false,  false, false,
+                   true, true, true,
+                   false, false, false]  # Configura qué datos de la IMU usar
+
+
+    imu1_differential: false  # No aplicar derivada en datos de IMU
+    imu1_remove_gravitational_acceleration: true  # Remueve aceleración gravitacional
+
+    publish_tf: true  # Publica la transformada
+    map_frame: map  # Frame de referencia del mapa
+    odom_frame: odom  # Frame de odometría
+    base_link_frame: base_link # Frame de la base del robot
+    world_frame: odom  # Frame para la localización (mapa u odometría)
+

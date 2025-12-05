@@ -1,0 +1,381 @@
+<?xml version="1.0"?>
+<scenario>
+
+  <looks>
+    <look name="black" gray="0.01" roughness="0.2" metalness="0.0"/>
+    <look name="blue" rgb="0.0 0.3 0.8" roughness="0.0"/>
+    <look name="payload" rgb="1.0 0.0 0.0" roughness="1.0"/>
+    <look name="bluerov_roscon_text" gray="1.0" roughness="0.4" metalness="0.5" texture="robot/robot_tex.png"/>
+  </looks>
+
+  <robot name="$(arg robot_name)" fixed="false" self_collisions="false">
+
+    <base_link name="Vehicle" type="compound" physics="submerged">
+
+      <external_part name="Base" type="model" physics="submerged" buoyant="false">
+        <visual>
+          <mesh filename="robot/base.obj" scale="1.0"/>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </visual>
+        <physical>
+          <mesh filename="robot/base_phy.obj" scale="1.0"/>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </physical>
+        <material name="Polyamid"/>
+        <mass value="5.0"/>
+        <look name="bluerov_roscon_text"/>
+        <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      </external_part>
+
+      <external_part name="Base2" type="model" physics="submerged" buoyant="false">
+        <visual>
+          <mesh filename="robot/base2.obj" scale="1.0"/>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </visual>
+        <physical>
+          <mesh filename="robot/base2_phy.obj" scale="1.0"/>
+          <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        </physical>
+        <material name="Polyamid"/>
+        <mass value="3.0"/>
+        <look name="bluerov_roscon_text"/>
+        <compound_transform rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      </external_part>
+
+      <!--   FOAM   -->
+      <internal_part name="RightFoam" type="cylinder" physics="submerged" buoyant="true">
+        <dimensions radius="0.05" height="0.35"/>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <material name="Neutral"/>
+        <mass value="0.025"/>
+        <look name="Gray"/>
+        <compound_transform rpy="1.57 0.0 1.57" xyz="0.0 0.12 -0.1"/>
+      </internal_part>
+
+      <internal_part name="LeftFoam" type="cylinder" physics="submerged" buoyant="true">
+        <dimensions radius="0.05" height="0.35"/>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <material name="Neutral"/>
+        <mass value="0.025"/>
+        <look name="Gray"/>
+        <compound_transform rpy="1.57 0.0 1.57" xyz="0.0 -0.12 -0.1"/>
+      </internal_part>
+
+      <internal_part name="BottomCylinder" type="cylinder" physics="submerged" buoyant="true">
+        <dimensions radius="0.047" height="0.2"/>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <material name="Neutral"/>
+        <mass value="0.025"/>
+        <look name="Gray"/>
+        <compound_transform rpy="1.57 0.0 1.57" xyz="0.0 0.0 0.042"/>
+      </internal_part>
+
+      <internal_part name="TopCylinder" type="cylinder" physics="submerged" buoyant="true">
+        <dimensions radius="0.047" height="0.3"/>
+        <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+        <material name="Neutral"/>
+        <mass value="0.025"/>
+        <look name="Gray"/>
+        <compound_transform rpy="1.57 0.0 1.57" xyz="0.0 0.0 -0.064"/>
+      </internal_part>
+
+    </base_link>
+
+
+    <!--   THRUSTERS   -->
+    <!-- T1 -->
+    <actuator name="Thruster_R_FORWARD_FRONT" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 0.0 -0.523599" xyz="0.134706 0.106976 0.0"/>
+      <propeller diameter="0.07" right="true">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="false" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T2 -->
+    <actuator name="Thruster_L_FORWARD_FRONT" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 0.0 0.523599" xyz="0.134706 -0.106976 0.0"/>
+      <propeller diameter="0.07" right="true">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="false" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T3 -->
+    <actuator name="Thruster_R_FORWARD_REAR" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 0.0 -2.618" xyz="-0.134706 0.106976 0.0"/>
+      <propeller diameter="0.07" right="false">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="true" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T4 -->
+    <actuator name="Thruster_L_FORWARD_REAR" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 0.0 2.618" xyz="-0.134706 -0.106976 0.0"/>
+      <propeller diameter="0.07" right="false">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="true" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T5 -->
+    <actuator name="Thruster_R_UP_FRONT" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 4.7123 0.0" xyz="0.128606 0.217745 -0.064159"/>
+      <propeller diameter="0.07" right="true">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="false" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T6 -->
+    <actuator name="Thruster_L_UP_FRONT" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 4.7123 0.0" xyz="0.128606 -0.217745 -0.064159"/>
+      <propeller diameter="0.07" right="false">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="true" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T7 -->
+    <actuator name="Thruster_R_UP_REAR" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 4.7123 0.0" xyz="-0.111606 0.217745 -0.064159"/>
+      <propeller diameter="0.07" right="false">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="true" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- T8 -->
+    <actuator name="Thruster_L_UP_REAR" type="thruster">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 4.7123 0.0" xyz="-0.111606 -0.217745 -0.064159"/>
+      <propeller diameter="0.07" right="true">
+        <mesh filename="robot/Propeller.obj" scale="1.0"/>
+        <material name="Neutral"/>
+        <look name="blue"/>
+      </propeller>
+      <specs max_setpoint="3250.0" inverted_setpoint="false" normalized_setpoint="false"/>
+      <rotor_dynamics type="first_order">
+        <time_constant value="1.0"/>
+      </rotor_dynamics>
+      <thrust_model type="fluid_dynamics">
+        <thrust_coeff forward="0.167" reverse="0.167"/>
+        <torque_coeff value="0.016"/>
+      </thrust_model>
+    </actuator>
+
+    <!-- LIGHTS -->
+    <light name="upright">
+      <specs radius="0.01" cone_angle="60.0" illuminance="12000.0"/>
+      <color temperature="5600.0"/>
+      <origin xyz="0.175 0.1897 -0.12" rpy="${pi/2.3} 0.0 ${pi/2}"/>
+      <link name="Vehicle"/>
+    </light>
+    <light name="upleft">
+      <specs radius="0.01" cone_angle="60.0" illuminance="12000.0"/>
+      <color temperature="5600.0"/>
+      <origin xyz="0.175 -0.1897 -0.12" rpy="${pi/2.3} 0.0 ${pi/2}"/>
+      <link name="Vehicle"/>
+    </light>
+    <light name="downright">
+      <specs radius="0.01" cone_angle="60.0" illuminance="12000.0"/>
+      <color temperature="5600.0"/>
+      <origin xyz="0.18 0.1897 0.045" rpy="${pi/2.5} 0.0 ${pi/2}"/>
+      <link name="Vehicle"/>
+    </light>
+    <light name="downleft">
+      <specs radius="0.01" cone_angle="60.0" illuminance="12000.0"/>
+      <color temperature="5600.0"/>
+      <origin xyz="0.18 -0.1897 0.045" rpy="${pi/2.5} 0.0 ${pi/2}"/>
+      <link name="Vehicle"/>
+    </light>
+
+    <!--   SENSORS   -->
+    <sensor name="dynamics" type="odometry" rate="30.0">
+      <link name="Vehicle"/>
+      <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0"/>
+      <ros_publisher topic="/$(arg robot_name)/dynamics/odometry_truth"/>
+    </sensor>
+
+    <!-- cameras -->
+    <sensor name="camera" type="camera" rate="30.0">
+      <link name="Vehicle"/>
+      <origin xyz="0.25 0.0 -0.055" rpy="${pi/6} 0 ${pi/2}"/>
+      <specs resolution_x="800" resolution_y="600" horizontal_fov="60.0"/>
+      <ros_publisher topic="/$(arg robot_name)/front_camera"/>
+    </sensor>
+
+    <sensor name="camera2" type="camera" rate="30.0">
+      <link name="Vehicle"/>
+      <origin rpy="${pi/6} 0.0 ${pi/4}" xyz="-0.05 0.25 -0.50"/>
+      <specs resolution_x="800" resolution_y="600" horizontal_fov="60.0"/>
+      <ros_publisher topic="/$(arg robot_name)/side_camera"/>
+    </sensor>
+
+    <sensor name="camera3" type="camera" rate="30.0">
+      <link name="Vehicle"/>
+      <origin rpy="${pi/4} 0.0 ${pi/2}" xyz="-0.7 0.0 -0.7"/>
+      <specs resolution_x="800" resolution_y="600" horizontal_fov="60.0"/>
+      <ros_publisher topic="/$(arg robot_name)/back_camera"/>
+    </sensor>
+
+    <sensor name="camera4" type="camera" rate="30.0">
+      <link name="Vehicle"/>
+      <origin xyz="0.50 0.0 -0.055" rpy="${pi/2} 0 ${-pi/2}"/>
+      <specs resolution_x="800" resolution_y="600" horizontal_fov="90.0"/>
+      <ros_publisher topic="/$(arg robot_name)/llums"/>
+    </sensor>
+
+    <sensor name="depth_cam" rate="30.0" type="depthcamera">
+      <specs resolution_x="200" resolution_y="200" horizontal_fov="60.0" depth_min="0.2" depth_max="3.0"/>
+      <noise depth="0.000"/>
+      <origin xyz="0.2 0.0 0.0" rpy="${pi/4} 0 1.57"/>
+      <link name="Vehicle"/>
+      <ros_publisher topic="/$(arg robot_name)/depth"/>
+    </sensor>
+
+    <sensor name="label_cam" rate="30.0" type="segmentation">
+      <specs resolution_x="480" resolution_y="340" horizontal_fov="60.0"/>
+      <link name="Vehicle"/>
+      <origin xyz="0.2 0.0 0.0" rpy="${pi/4} 0 1.57"/>
+      <ros_publisher topic="/$(arg robot_name)/label_cam"/>
+    </sensor>
+
+    <sensor name="event_cam" rate="30.0" type="ebc">
+      <specs resolution_x="480" resolution_y="340" horizontal_fov="60.0"
+        contrast_threshold_pos="0.28" contrast_threshold_neg="0.28" refractory_period_ns="200"/>
+      <noise contrast_threshold_pos="0.01" contrast_threshold_neg="0.01"/>
+      <link name="Vehicle"/>
+      <origin xyz="0.2 0.0 0.0" rpy="${pi/4} 0 1.57"/>
+      <ros_publisher topic="/$(arg robot_name)/event_cam"/>
+    </sensor>
+
+    <sensor name="OfCam" rate="30.0" type="opticalflow">
+      <specs resolution_x="800" resolution_y="600" horizontal_fov="60.0"/>
+      <noise velocity_x="10.0" velocity_y="10.0"/>
+      <display velocity_max="10.0"/>
+      <origin xyz="0.2 0.0 0.0" rpy="${pi/4} 0 1.57"/>
+      <link name="Vehicle"/>
+      <ros_publisher topic="/$(arg robot_name)/optical_flow"/>
+    </sensor>
+
+    <!-- sonar sensors -->
+
+    <sensor name="msis_link" type="msis">
+      <specs step="1" bins="500" horizontal_beam_width="2.0" vertical_beam_width="60.0"/>
+      <settings range_min="0.5" range_max="10.0" rotation_min="-60.0" rotation_max="60.0" gain="1.5"/>
+      <noise multiplicative="0.02" additive="0.03"/>
+      <display colormap="hot"/>
+      <origin xyz="0.25 0.0 -0.055" rpy="${pi/2} 0 ${pi/2}"/>
+      <link name="Vehicle"/>
+      <ros_publisher topic="/$(arg robot_name)/msis"/>
+    </sensor>
+
+    <sensor name="fls_link" type="fls">
+      <specs beams="512" bins="500" horizontal_fov="120.0" vertical_fov="30.0"/>
+      <settings range_min="0.5" range_max="10.0" gain="1.1"/>
+      <noise multiplicative="0.01" additive="0.02"/>
+      <display colormap="hot"/>
+      <origin xyz="0.25 0.0 -0.055" rpy="${pi/2} 0 ${pi/2}"/>
+      <link name="Vehicle"/>
+      <ros_publisher topic="/$(arg robot_name)/fls"/>
+    </sensor>
+
+    <!-- <sensor name="base_link" rate="2.0" type="multibeam">
+      <specs fov="60.0" steps="64"/>
+      <range distance_min="0.1" distance_max="5.0"/>
+      <noise distance="0"/>
+      <history samples="1"/>
+      <origin xyz="0.25 0.0 0.2" rpy="0 0.0 0.0"/>
+      <link name="Vehicle"/>
+      <ros_publisher topic="/$(arg robot_name)/profiler"/>
+    </sensor> -->
+
+    <!-- <sensor name="sss_link" type="sss">
+      <specs bins="500" lines="400" horizontal_beam_width="2.0" vertical_beam_width="50.0" vertical_tilt="60.0"/>
+      <settings range_min="1.0" range_max="100.0" gain="1.2"/>
+      <noise multiplicative="0.02" additive="0.04"/>
+      <display colormap="hot"/>
+      <origin xyz="0.0 0.0 0.20" rpy="0.0 0.0 0.0"/>
+      <link name="Vehicle"/>
+      <ros_publisher topic="/$(arg robot_name)/sss"/>
+    </sensor> -->
+
+    <world_transform rpy="0.0 0.0 $(arg yaw)" xyz="$(arg position)"/>
+
+    <ros_subscriber thrusters="/$(arg robot_name)/sf_controller/thruster_setpoints"/>
+    <ros_publisher thrusters="/$(arg robot_name)/sf_controller/thruster_state"/>
+
+  </robot>
+</scenario>

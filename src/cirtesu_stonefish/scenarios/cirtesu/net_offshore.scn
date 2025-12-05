@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<scenario>
+    <environment>
+        <ned latitude="39.9944" longitude="-0.0741" />
+        <ocean />
+        <atmosphere>
+            <sun azimuth="-108.0" elevation="50.0" />
+        </atmosphere>
+    </environment>
+    
+    <materials>
+		<material name="Neutral" density="1000.0" restitution="0.5"/>
+    </materials>
+
+    <looks>
+        <look name="black" gray="0.01" roughness="0.2" metalness="0.0"/>
+    </looks>
+
+    <static name="net" type="model">
+        <physical>
+            <mesh filename="net/net_cage_physical.obj" scale="1.0" />
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        </physical>
+        <visual>
+            <mesh filename="net/net_cage_holes.obj" scale="1.0" />
+            <origin rpy="0.0 0.0 0.0" xyz="0.0 0.0 0.0" />
+        </visual>
+        <material name="Rock" />
+        <look name="black" />
+        <world_transform rpy="0.0 3.1416 0.0 " xyz="0.0 0.0 9.8" />
+    </static>
+
+</scenario>
